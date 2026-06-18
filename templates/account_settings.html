@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        .wrapper {
+            width: 85%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .settings-content {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .badge {
+            background: #10b981;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-warning { background: #f59e0b; color: white; }
+
+        .danger-box {
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid #ef4444;
+            display: flex;
+            gap: 15px;
+        }
+
+        .flash-success {
+            background: rgba(16,185,129,0.2);
+            border: 1px solid #10b981;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #10b981;
+        }
+
+        .flash-error {
+            background: rgba(239,68,68,0.2);
+            border: 1px solid #ef4444;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #ef4444;
+        }
+
+        /* Password Wrapper */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .toggle-password:hover {
+            opacity: 1;
+        }
+
+        /* Strength Bar */
+        .strength-container {
+            height: 8px;
+            background: #334155;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        small {
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>⚙ Account Settings</h1>
+
+<div class="wrapper">
+    <div class="settings-content">
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-pic">
+                {{ user.name[0] }}
+            </div>
+            <div>
+                <h2>{{ user.name }}
+                    <span class="badge">{{ user.role }}</span>
+                </h2>
+                <p>Member since {{ user.joined }}</p>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <form method="POST" action="/update-profile">
+            <div class="section">
+                <h2>Profile Information</h2>
+
+                <label>Full Name</label>
+                <input type="text" name="name" value="{{ user.name }}" required>
+
+                <label>Email Address</label>
+                <input type="email" name="email" value="{{ user.email }}" required>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+
+        <!-- Password Form -->
+        <form method="POST" action="/update-password" id="passwordForm">
+            <div class="section">
+                <h2>Change Password</h2>
+
+                <label>Current Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="current_password" id="currentPassword" required>
+                    <span class="toggle-password" onclick="togglePassword('currentPassword', this)">👁</span>
+                </div>
+
+                <label>New Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="new_password" id="newPassword" required>
+                    <span class="toggle-password" onclick="togglePassword('newPassword', this)">👁</span>
+                </div>
+
+                <div class="strength-container">
+                    <div id="strengthBar" class="strength-bar"></div>
+                </div>
+                <small id="strengthText"></small>
+
+                <label>Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="confirm_password" id="confirmPassword" required>
+                    <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁</span>
+                </div>
+                <small id="matchText"></small>
+
+                <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+        </form>
+
+        <!-- Danger Zone -->
+        <div class="danger-box">
+            <a href="/logout"><button class="btn btn-warning" type="button">🚪Logout</button></a>
+            <form method="POST" action="/delete-account" 
+      onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');">
+    <button class="btn btn-danger">Delete Account</button>
+</form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const passwordInput = document.getElementById("newPassword");
+const confirmPasswordInput = document.getElementById("confirmPassword");
+const strengthBar = document.getElementById("strengthBar");
+const strengthText = document.getElementById("strengthText");
+const matchText = document.getElementById("matchText");
+const form = document.getElementById("passwordForm");
+
+let passwordStrength = 0;
+
+function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+    } else {
+        input.type = "password";
+        icon.textContent = "👁";
+    }
+}
+
+passwordInput.addEventListener("input", function () {
+    const value = passwordInput.value;
+    let strength = 0;
+
+    if (value.length >= 8) strength++;
+    if (/[A-Z]/.test(value)) strength++;
+    if (/[a-z]/.test(value)) strength++;
+    if (/[0-9]/.test(value)) strength++;
+    if (/[^A-Za-z0-9]/.test(value)) strength++;
+
+    passwordStrength = strength;
+
+    if (strength <= 2) {
+        strengthBar.style.width = "30%";
+        strengthBar.style.background = "#ef4444";
+        strengthText.innerText = "Weak password";
+    } else if (strength <= 4) {
+        strengthBar.style.width = "70%";
+        strengthBar.style.background = "#f59e0b";
+        strengthText.innerText = "Medium strength";
+    } else {
+        strengthBar.style.width = "100%";
+        strengthBar.style.background = "#10b981";
+        strengthText.innerText = "Strong password";
+    }
+});
+
+confirmPasswordInput.addEventListener("input", function () {
+    if (confirmPasswordInput.value !== passwordInput.value) {
+        matchText.style.color = "#ef4444";
+        matchText.innerText = "Passwords do not match";
+    } else {
+        matchText.style.color = "#10b981";
+        matchText.innerText = "Passwords match";
+    }
+});
+
+form.addEventListener("submit", function (e) {
+    if (passwordStrength < 3) {
+        alert("Password is too weak!");
+        e.preventDefault();
+    }
+
+    if (confirmPasswordInput.value !== passwordInput.value) {
+        alert("Passwords do not match!");
+        e.preventDefault();
+    }
+});
+</script>
+
+</body>
+</html>

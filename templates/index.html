@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Chat Bot </title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chat-wrapper {
+            width: 500px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid #1e293b;
+            text-align: center;
+            background: #111827;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .user {
+            background: #2563eb;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background: #1e293b;
+            align-self: flex-start;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            gap: 8px;
+            border-top: 1px solid #1e293b;
+            background: #111827;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: #1e293b;
+            color: white;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            background: #22c55e;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .typing {
+            font-style: italic;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-wrapper">
+    <div class="chat-header">
+        🤖 House Chat Bot 
+    </div>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <div class="input-area">
+        <input type="number" id="sqft" placeholder="Square Feet">
+        <input type="number" id="budget" placeholder="Budget">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+
+    let sqft = document.getElementById("sqft").value;
+    let budget = document.getElementById("budget").value;
+    let chatBox = document.getElementById("chatBox");
+
+    if (!sqft || !budget) {
+        alert("Enter both values");
+        return;
+    }
+
+    // User message
+    let userDiv = document.createElement("div");
+    userDiv.className = "message user";
+    userDiv.innerHTML = `Sqft: ${sqft}<br>Budget: $${budget}`;
+    chatBox.appendChild(userDiv);
+
+    // Typing message
+    let typingDiv = document.createElement("div");
+    typingDiv.className = "message bot typing";
+    typingDiv.innerText = "AI is analyzing dataset...";
+    chatBox.appendChild(typingDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            square_feet: sqft,
+            budget: budget
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        typingDiv.remove();
+
+        let botDiv = document.createElement("div");
+        botDiv.className = "message bot";
+
+        let content = `<b>Predicted Price:</b> ${data.predicted_price}<br><br>`;
+
+        if (!data.matching_houses || data.matching_houses.length === 0) {
+            content += "❌ No matching houses found.";
+        } else {
+            content += "<b>Available Houses:</b><br><br>";
+
+            data.matching_houses.forEach(house => {
+                content += `
+                    📍 ${house.city}<br>
+                    💰 ${house.price}<br>
+                    📏 ${house.square_feet} sqft<br><br>
+                `;
+            });
+        }
+
+        botDiv.innerHTML = content;
+        chatBox.appendChild(botDiv);
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(error => {
+
+        typingDiv.remove();
+
+        let errorDiv = document.createElement("div");
+        errorDiv.className = "message bot";
+        errorDiv.innerHTML = "⚠️ Server error. Check Flask terminal.";
+        chatBox.appendChild(errorDiv);
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    document.getElementById("sqft").value = "";
+    document.getElementById("budget").value = "";
+}
+
+// Enter key support
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+});
+</script>
+
+</body>
+</html>

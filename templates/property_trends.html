@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Trends</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            font-family: Arial;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        /* Glass Card */
+        .card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            margin: 30px auto;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* KPI Cards */
+        .kpi-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px;
+            flex-wrap: wrap;
+        }
+
+        .kpi {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            width: 200px;
+            margin: 10px;
+        }
+
+        select {
+            padding: 8px;
+            margin: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>📊 Property Trends Dashboard</h1>
+
+    <!-- KPI Section -->
+    <div class="kpi-container">
+        <div class="kpi">
+            <h2>$450k</h2>
+            <p>Avg Price</p>
+        </div>
+        <div class="kpi">
+            <h2>1,250</h2>
+            <p>Total Listings</p>
+        </div>
+        <div class="kpi">
+            <h2>+12%</h2>
+            <p>Market Growth</p>
+        </div>
+        <div class="kpi">
+            <h2>Downtown</h2>
+            <p>Top Area</p>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div>
+        <select>
+            <option>2024</option>
+            <option>2025</option>
+        </select>
+
+        <select>
+            <option>All Cities</option>
+            <option>New York</option>
+            <option>Los Angeles</option>
+        </select>
+
+        <select>
+            <option>All Types</option>
+            <option>Apartment</option>
+            <option>Villa</option>
+        </select>
+    </div>
+
+    <!-- Line Chart -->
+    <div class="card">
+        <canvas id="trendChart"></canvas>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="card">
+        <canvas id="barChart"></canvas>
+    </div>
+
+    <script>
+        // Line Chart
+        const ctx = document.getElementById('trendChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Average Property Price ($k)',
+                    data: [300, 350, 400, 380, 450],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59,130,246,0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Bar Chart
+        const ctx2 = document.getElementById('barChart').getContext('2d');
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Apartments', 'Villas', 'Plots'],
+                datasets: [{
+                    label: 'Listings Count',
+                    data: [120, 80, 50],
+                    backgroundColor: ['#10b981', '#6366f1', '#f59e0b']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+    </script>
+
+</body>
+</html>

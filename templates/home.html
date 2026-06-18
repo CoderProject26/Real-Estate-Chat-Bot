@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Chat Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 60px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            margin-left: 20px;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #22c55e;
+        }
+
+        .hero {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons a {
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            margin: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #22c55e;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #16a34a;
+        }
+
+        .btn-outline {
+            border: 2px solid #22c55e;
+            color: #22c55e;
+        }
+
+        .btn-outline:hover {
+            background: #22c55e;
+            color: white;
+        }
+
+        .features {
+            background: #111827;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            width: 280px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* PROFILE CARD */
+        .profile-card {
+            margin: 30px auto 0;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-card .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .social-icons a {
+            margin: 0 8px;
+            color: #94a3b8;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .profile-card .social-icons a:hover {
+            color: #22c55e;
+            transform: scale(1.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #0f172a;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🏠 Real Estate Chat Bot</h2>
+    <div class="nav-links">
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Find Your Dream Home with Chat Bot</h1>
+        <p>
+            Get smart price predictions and discover houses that match your budget
+            using advanced machine learning technology.
+        </p>
+
+        <div class="cta-buttons">
+            <a href="/register" class="btn-primary">Get Started</a>
+            <a href="/login" class="btn-outline">Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+    <h2>Why Choose Our Chat Bot 🤖?</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>🤖 Chat Bot Prediction</h3>
+            <p>Accurate house price predictions using real housing data.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>💰 Budget Matching</h3>
+            <p>Find homes that match your financial plans instantly.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Smart Analysis</h3>
+            <p>Machine learning powered insights for better decisions.</p>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+        <div class="name">👨‍💻 Nihar</div>
+
+        <div class="social-icons">
+            <a href="https://facebook.com/yourprofile" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com/yourprofile" target="_blank">
+                <i class="fab fa-twitter"></i>
+    
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/yourprofile" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </div>
+
+    <p style="margin-top: 20px;">
+        © 2026 Real Estate Chat Bot | Built with Flask & Machine Learning
+    </p>
+
+</footer>
+
+</body>
+</html>

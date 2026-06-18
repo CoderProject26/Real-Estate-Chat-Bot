@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Report</title>
+</head>
+<body style="background:#0f172a; color:white; font-family:Arial; padding:40px;">
+
+    <h2>📝 Create New Report</h2>
+
+    <form method="POST">
+
+        <label>Report Name</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Date</label><br>
+        <input type="date" name="date" required><br><br>
+
+        <label>Report Type</label><br>
+        <select name="type" required>
+            <option value="Price Trend">Price Trend</option>
+            <option value="Area Analysis">Area Analysis</option>
+            <option value="Property Type">Property Type</option>
+        </select><br><br>
+
+        <label>Description</label><br>
+        <textarea name="description" rows="4" cols="40" required></textarea><br><br>
+
+        <button type="submit">Save Report</button>
+
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Reports</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+        }
+
+        .container {
+            width: 85%;
+            margin: 60px auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        td {
+            padding: 18px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s ease;
+        }
+
+        .type-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #1f3c88;
+        }
+
+        .actions a {
+            text-decoration: none;
+            margin-right: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .view-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .export-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .view-btn:hover { background: #1d4ed8; }
+        .export-btn:hover { background: #15803d; }
+        .delete-btn:hover { background: #b91c1c; }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📄 Saved Reports</h1>
+
+    <div class="card">
+
+        {% if reports %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Report Name</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report['name'] }}</td>
+                    <td>{{ report['date'] }}</td>
+                    <td>
+                        <span class="type-badge">
+                            {{ report['type'] }}
+                        </span>
+                    </td>
+                    <td class="actions" style="text-align:right;">
+                        <a href="{{ url_for('view_report', report_id=report['id']) }}" class="view-btn">View</a>
+                        <a href="{{ url_for('export_report', report_id=report['id']) }}" class="export-btn">PDF</a>
+                        <a href="#" class="delete-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="empty">
+            No reports created yet.
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

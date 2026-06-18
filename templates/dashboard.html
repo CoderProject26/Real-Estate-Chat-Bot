@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard | Real Estate Chat Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: #0f172a;
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #111827;
+            padding: 25px;
+            position: fixed;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+             .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    white-space: nowrap;
+}
+
+.logo-text {
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .logo-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #9ca3af;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .menu-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .menu-text {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+            width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main.expanded {
+            margin-left: 70px;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .user {
+            background: #1f2937;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 15px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            text-decoration: none;
+            background: #2563eb;
+            padding: 8px 15px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .card a:hover {
+            background: #1d4ed8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                z-index: 1000;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo">
+    <span class="logo-icon">🏠</span>
+    <span class="logo-text">Real Estate Chat Bot</span>
+</div>
+
+        <div class="menu">
+            <a href="/dashboard" class="active">
+                🏠 <span class="menu-text">Dashboard</span>
+            </a>
+
+            <a href="/assistant">
+                🤖 <span class="menu-text">Chat Bot</span>
+            </a>
+
+            <a href="/dashboard/property-trends">
+                📈 <span class="menu-text">Property Trends</span>
+            </a>
+
+            <a href="/dashboard/saved-reports">
+                📂 <span class="menu-text">Saved Reports</span>
+            </a>
+
+            <a href="/dashboard/account-settings">
+                👤 <span class="menu-text">Account Settings</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <button id="toggleSidebar" class="toggle-btn">☰</button>
+
+        <div class="topbar">
+            <div class="welcome">
+                Welcome back, {{ session['user'] }} 👋
+            </div>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🤖 Chat Bot  House Prediction</h3>
+                <p>Predict property prices using machine learning.</p>
+                <a href="/assistant">Launch</a>
+            </div>
+
+            <div class="card">
+                <h3>📈 Property Trends</h3>
+                <p>Analyze market patterns and housing growth.</p>
+                <a href="/dashboard/property-trends">View Here</a>
+            </div>
+
+            <div class="card">
+                <h3>📂 Saved Reports</h3>
+                <p>View and manage saved property predictions.</p>
+            <a href="/dashboard/saved-reports">
+    View Reports
+</a>
+            </div>
+
+            <div class="card">
+                <h3>👤 Account Settings</h3>
+                <p>Manage profile and preferences.</p>
+                <a href="/dashboard/account-settings">Manage</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TOGGLE SCRIPT -->
+    <script>
+        const toggleBtn = document.getElementById("toggleSidebar");
+        const sidebar = document.querySelector(".sidebar");
+        const main = document.querySelector(".main");
+
+        toggleBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("collapsed");
+            main.classList.toggle("expanded");
+        });
+    </script>
+
+</body>
+</html>
