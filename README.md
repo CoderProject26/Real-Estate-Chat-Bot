@@ -1,44 +1,47 @@
 # 🏠 Real Estate Chat Bot
 
-A web-based Real Estate Chat Bot developed using Python and Django that helps users interact with a real estate platform through a conversational interface. Users can search for properties and get relevant information based on their requirements.
+A web-based Real Estate Chat Bot designed to help users search for and explore property information through an interactive chatbot interface.
+
+The application provides a conversational way for users to find relevant real estate properties and access property-related information.
 
 ## 🚀 Features
 
 - 🤖 Interactive real estate chatbot
-- 🏠 Property search
+- 🏠 Property search and exploration
 - 🔍 Search properties based on user requirements
-- 📍 Property location information
 - 💰 Property price information
-- 🛏️ Property details such as bedrooms and bathrooms
-- 📋 Property listing management
+- 📍 Property location information
+- 🏡 Property details and listings
 - 💬 Conversational user interface
-- 🌐 Django-based web application
-- 📱 Responsive web interface
+- 📊 Real estate market information
+- 🌐 Web-based application
+- 📱 User-friendly interface
 
 ## 🛠️ Technologies Used
 
-### Backend
 - Python
 - Django
-
-### Frontend
 - HTML5
 - CSS3
 - JavaScript
-
-### Database
 - SQLite
+- React
+- REST APIs
 
 ## 📂 Project Structure
 
 ```text
 Real-Estate-Chat-Bot/
 │
-├── chatbot/
-├── properties/
+├── src/
+│   └── components/
+│
 ├── templates/
-├── static/
-├── media/
-├── manage.py
-├── db.sqlite3
+│
+├── app.py
+├── .gitignore
+├── Property.png
+├── Chatbot.png
+├── Account details.png
+├── January Market Analysis.pdf
 └── README.md
